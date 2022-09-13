@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { loginFields } from "../constants/formFields";
 import Input from "./Input";
 import FormAction from './FormAction';
-
+import { postMethod } from '../constants/axiosRequests';
 const fields=loginFields;
 let fieldsState = {};
 fields.forEach(field=>fieldsState[field.id]='');
+
 
 export default function Login(){
     const [loginState,setLoginState]=useState(fieldsState);
@@ -20,11 +21,12 @@ export default function Login(){
     }
 
     const authenticateUser = () =>{
-        
+        console.log(loginState);
+        postMethod("login", loginState);
     }
 
     return(
-        <form>
+        <form onSubmit={handleSubmit}>
         <div>
             {
                 fields.map(field=>
@@ -43,7 +45,8 @@ export default function Login(){
                 )
             }
         </div>
-        <FormAction handleSubmit={handleSubmit} text="Login"/>
+        
+        <FormAction text="Login"/>
       </form>
     )
 }

@@ -8,7 +8,6 @@ export default function Input({
     type,
     isRequired=false,
     placeholder,
-    customClass
 }){
     return(
         <div>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { signupFields } from "../constants/formFields";
 import Input from "./Input";
 import FormAction from './FormAction';
+import { postMethod } from '../constants/axiosRequests';
 
 const fields=signupFields;
 let fieldsState = {};
@@ -20,12 +21,12 @@ export default function Login(){
     }
 
     const registerAccount = () =>{
-        
-        
+
+        postMethod("signup", signupState)
     }
 
     return(
-        <form>
+        <form onSubmit={handleSubmit}>
         <div>
             {
                 fields.map(field=>
@@ -44,7 +45,7 @@ export default function Login(){
                 )
             }
         </div>
-        <FormAction handleSubmit={handleSubmit} text="Signup"/>
+        <FormAction text="Signup"/>
       </form>
     )
 }

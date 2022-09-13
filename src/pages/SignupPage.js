@@ -7,7 +7,7 @@ export default function SignupPage() {
         <>
           <Header
             heading="Register your account"
-            paragraph="Go to Login "
+            paragraph="Go to "
             linkName="Login"
             linkUrl="/"
             />    
