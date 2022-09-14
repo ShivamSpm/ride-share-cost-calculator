@@ -9,7 +9,7 @@ export default function SignupPage() {
             heading="Register your account"
             paragraph="Go to "
             linkName="Login"
-            linkUrl="/"
+            linkUrl="/login"
             />    
             <Signup/>
         </>
