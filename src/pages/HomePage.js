@@ -1,12 +1,16 @@
 import React from "react";
 import { Nav, NavLink, NavMenu } 
     from "../components/NavbarElements";
-import { useNavigate } from "react-router-dom";  
+import { useDispatch } from "react-redux";
+import { logout } from "../features/userSlice";
 
 export default function HomePage(){
-    const navigate = useNavigate();
-    function logout(){
-        navigate('/');
+    const dispatch = useDispatch();
+    const handleLogout = (e) => {
+        e.preventDefault();
+        dispatch(logout());
+        sessionStorage.removeItem('user');
+        window.location.reload(false);
     }
   return (
     <>
@@ -22,7 +26,7 @@ export default function HomePage(){
             Settings
           </NavLink>
         </NavMenu>
-        <button onClick={logout()}>Logout</button>
+        <button onClick={(e) => handleLogout(e)}>Logout</button>
       </Nav>
     </>
   );

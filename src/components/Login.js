@@ -1,25 +1,24 @@
-import { useRef, useState, useEffect, useContext } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { loginFields } from "../constants/formFields";
 import Input from "./Input";
 import FormAction from './FormAction';
 import { postMethod } from '../constants/axiosRequests';
-import { useNavigate } from 'react-router-dom';
-import AuthContext from '../context/AuthProvider'
+import { useDispatch } from 'react-redux';
+import { login } from '../features/userSlice';
 
 const fields=loginFields;
 let fieldsState = {};
 fields.forEach(field=>fieldsState[field.id]='');
 
 export default function Login(){
-    const { setAuth } = useContext(AuthContext);
+    // const sesStorage = window.sessionStorage;
     const [loginState,setLoginState]=useState(fieldsState);
     // const userRef = useRef();
     const errRef = useRef();
-    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
     const userEmail = loginState['email-address'];
-    const userPassword = loginState['password']
+    const userPassword = loginState['password'];
     // useEffect(() => {
     //     userRef.current.focus();
     // }, [])
@@ -31,15 +30,22 @@ export default function Login(){
     const handleChange=(e)=>{
         setLoginState({...loginState,[e.target.id]:e.target.value})
     }
+    
 
     const handleSubmit= async (e)=>{
         e.preventDefault();
+
         try{
             const response = await postMethod("login", loginState);
-            setAuth({userEmail, userPassword})
+            
             console.log("response");
             console.log(response);
-            setSuccess(true);
+            dispatch(login({
+                response
+            }));
+            sessionStorage.setItem('user', response);
+            window.location.reload(false);
+            
         }catch(err){
             if(!err?.response){
                 setErrMsg('No server Response');
@@ -55,10 +61,7 @@ export default function Login(){
     }
 
     return(
-        <>
-            {success ? (
-                navigate('/home')
-            ) :  (
+        <>    
             <section>
             <p ref={errRef}>{errMsg}</p>
             <form onSubmit={handleSubmit}>
@@ -83,7 +86,6 @@ export default function Login(){
             <FormAction text="Login"/>
         </form>
         </section>
-        )}
       </>
     )
 }
