@@ -1,10 +1,10 @@
 import React from "react";
 import { Nav, NavLink, NavMenu } 
-    from "../components/NavbarElements";
+    from "./NavbarElements";
 import { useDispatch } from "react-redux";
 import { logout } from "../features/userSlice";
 
-export default function HomePage(){
+export default function Navbar(){
     const dispatch = useDispatch();
     const handleLogout = (e) => {
         e.preventDefault();
@@ -16,13 +16,13 @@ export default function HomePage(){
     <>
       <Nav>
         <NavMenu>
-          <NavLink to="/rider-provider">
+          <NavLink to="/rider" >
             Rider Provider
           </NavLink>
-          <NavLink to="/passenger">
+          <NavLink to="/passenger" >
             Passenger
           </NavLink>
-          <NavLink to="/settings">
+          <NavLink to="/settings" >
             Settings
           </NavLink>
         </NavMenu>
