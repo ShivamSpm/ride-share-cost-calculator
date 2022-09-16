@@ -8,6 +8,8 @@ const client = axios.create({
 export default async function getMethod(path){
 
         const response = await client.get(`${path}`);
+        // console.log("response");
+        // console.log(response);
         return response.data;
 }
 
