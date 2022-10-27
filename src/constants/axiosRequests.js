@@ -5,9 +5,13 @@ const client = axios.create({
   });
 
 
-export default async function getMethod(path){
+export default async function getMethod(path, data){
 
-        const response = await client.get(`${path}`);
+        const response = await client.get(`${path}`, {
+          params: {
+            data: data,
+          }
+        });
         // console.log("response");
         // console.log(response);
         return response.data;

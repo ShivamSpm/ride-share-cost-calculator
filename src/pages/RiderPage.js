@@ -10,7 +10,7 @@ export default function RiderPage(){
     const getDropdownMenuData = async() =>{
         let response = []
         try{
-        response = await getMethod("getAllUsers");
+        response = await getMethod("getAllUsers", "");
         }catch(err){
             console.log(err);
         }

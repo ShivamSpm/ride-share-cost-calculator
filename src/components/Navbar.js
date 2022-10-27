@@ -19,8 +19,8 @@ export default function Navbar(){
           <NavLink to="/rider" >
             Rider Provider
           </NavLink>
-          <NavLink to="/passenger" >
-            Passenger
+          <NavLink to="/owed" >
+            Owe/Owed
           </NavLink>
           <NavLink to="/settings" >
             Settings

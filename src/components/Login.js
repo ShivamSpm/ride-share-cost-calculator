@@ -43,7 +43,7 @@ export default function Login(){
             dispatch(login({
                 response
             }));
-            sessionStorage.setItem('user', response);
+            sessionStorage.setItem('user', JSON.stringify(response) );
             window.location.reload(false);
             
         }catch(err){

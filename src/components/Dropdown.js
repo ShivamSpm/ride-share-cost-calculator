@@ -6,6 +6,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { MenuItem, InputBase, Menu, Divider } from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
 import { makeStyles } from "@material-ui/core/styles";
+import { postMethod } from "../constants/axiosRequests";
 
 const useStyles = makeStyles((theme) => ({
     DropDownButton: {
@@ -82,20 +83,19 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function Dropdown(props){
-    console.log("props");
-    console.log(props.data);
     
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
     const [searchText, setSearchText] = useState("");
     const [selection, setSelection] = useState("");
     const [namesList, setNamesList] = useState([]);
-    const [distance, setdistance] = useState(0);
+    const [distance, setdistance] = useState("");
+    const [error, setError] = useState("");
 
     useEffect(() => {
         setNamesList(JSON.parse(localStorage.getItem("localNames")));
     }, []);
-
+    console.log(namesList);
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -126,26 +126,61 @@ export default function Dropdown(props){
         localStorage.setItem("localNames", JSON.stringify(deleted));
     }
 
-    const handleChange = (e) => {
+    const handleDistanceChange = (e) => {
         setdistance(e.target.value);
     }
-    console.log(namesList);
+
+    // console.log(namesList);
+    const handleRideNow = async(e) =>{
+        if(isNaN(distance) || distance===""){
+          console.log("inside if")
+          setError("Please input correct distance value (in miles)");
+        }
+        else{
+        setError("");
+        const user = JSON.parse(sessionStorage.getItem('user'));
+        console.log(user);
+        const userEmail = user["email"];
+        const riderEmailJson = {
+          "riderEmail":userEmail
+        }
+        const rideDistanceJson = {
+          "distance": distance
+        }
+        
+        namesList.push(riderEmailJson);
+        namesList.push(rideDistanceJson);
+        
+        try{
+        await postMethod("/saveRide", namesList);
+        namesList.splice(-1)
+        namesList.splice(-1)
+        setNamesList(namesList);
+        console.log(namesList);
+        // setDupNamesList([]);
+        }catch(err){
+          console.log(err);
+        }
+      }
+    }
 
     return (
         <>
             <div>
+            <div style={{color: 'red'}}>{error}</div>
             <Button
                 type="button"
                 className={classes.DropDownButton}
                 onClick={handleMenuOpen}
             >
-                {selection ? selection : <span style={{color:'#A3A3A3',fontSize:'15px' }}>Add name...</span>}
-                <KeyboardArrowDownIcon />
+                {selection ? selection : <span style={{color:'#A3A3A3',fontSize:'17px' }}>Select name...</span>}
+                <KeyboardArrowDownIcon/>
             </Button>
             {renderDashboardMenu()}
-            <Button onClick={handleAddName}>Add</Button>
-            <input
-            onChange = {handleChange}
+            <Button onClick={handleAddName}>Add name</Button>
+            <input style={{margin:'0px 30px'}}
+            onChange = {handleDistanceChange}
+            placeholder="Enter Distance..."
             />
             </div>
           
@@ -161,17 +196,18 @@ export default function Dropdown(props){
                     <div className="col-1" style={{margin:'0px 50px'}}>
                         <button className="mt-2 btn btn-warning material-icons"
                             onClick={() => handleDelete(name)}
-                        >delete</button>
+                        >Delete</button>
                     </div>
                 </div>
             </React.Fragment>
         )
         )}
-        <button style={{margin:'50px 0px'}}>Ride now</button>
+        <button style={{margin:'50px 0px'}} onClick={handleRideNow}>Ride now</button>
         </>
       );
 
       function renderDashboardMenu() {
+        console.log(props.data);
         const displayOptions = props.data
           .map((item) => {
             if (item.Name.toLowerCase().includes(searchText.toLowerCase())) {
