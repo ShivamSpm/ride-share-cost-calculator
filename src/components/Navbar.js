@@ -3,7 +3,6 @@ import { Nav, NavLink, NavMenu }
     from "./NavbarElements";
 import { useDispatch } from "react-redux";
 import { logout } from "../features/userSlice";
-import Cookies from 'js-cookie';
 
 export default function Navbar(){
     const dispatch = useDispatch();

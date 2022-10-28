@@ -7,7 +7,6 @@ import { MenuItem, InputBase, Menu, Divider } from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
 import { makeStyles } from "@material-ui/core/styles";
 import { postMethod } from "../constants/axiosRequests";
-import Cookies from 'universal-cookie';
 
 import { getCookie } from "../App";
 
@@ -141,7 +140,6 @@ export default function Dropdown(props){
         }
         else{
         setError("");
-        const user = JSON.parse(sessionStorage.getItem('user'));
         // const user1 = Cookies.get('user');
         const user1 = getCookie('user');
         console.log("user1");
