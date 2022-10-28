@@ -3,6 +3,7 @@ import { Nav, NavLink, NavMenu }
     from "./NavbarElements";
 import { useDispatch } from "react-redux";
 import { logout } from "../features/userSlice";
+import Cookies from 'js-cookie';
 
 export default function Navbar(){
     const dispatch = useDispatch();
@@ -10,6 +11,8 @@ export default function Navbar(){
         e.preventDefault();
         dispatch(logout());
         sessionStorage.removeItem('user');
+        // Cookies.remove('user', { path: '/login' });
+        document.cookie = "user= ;"
         window.location.reload(false);
     }
   return (

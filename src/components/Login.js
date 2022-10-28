@@ -11,17 +11,14 @@ let fieldsState = {};
 fields.forEach(field=>fieldsState[field.id]='');
 
 export default function Login(){
-    // const sesStorage = window.sessionStorage;
+
     const [loginState,setLoginState]=useState(fieldsState);
-    // const userRef = useRef();
+
     const errRef = useRef();
     const dispatch = useDispatch();
     const [errMsg, setErrMsg] = useState('');
     const userEmail = loginState['email-address'];
     const userPassword = loginState['password'];
-    // useEffect(() => {
-    //     userRef.current.focus();
-    // }, [])
 
     useEffect(() => {
         setErrMsg('');
@@ -43,7 +40,10 @@ export default function Login(){
             dispatch(login({
                 response
             }));
-            sessionStorage.setItem('user', JSON.stringify(response) );
+            // sessionStorage.setItem('user', JSON.stringify(response) );
+            // cookies.set('user', JSON.stringify(response), { path: '/login' });
+            // Cookies.set('user', JSON.stringify(response), { expires: 10, path: '/login' })
+            document.cookie = "user="+JSON.stringify(response);
             window.location.reload(false);
             
         }catch(err){

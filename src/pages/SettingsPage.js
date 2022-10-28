@@ -1,19 +1,36 @@
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
-import { postMethod } from "../constants/axiosRequests";
+import getMethod, { postMethod } from "../constants/axiosRequests";
+import { getCookie } from "../App";
 
 export default function SettingsPage(){
 
     const [mileage, setMileage] = useState("");
     const [gasCost, setGasCost] = useState("");
-    
+    const [currentMileage, setCurrentMileage] = useState("");
+    const [currentGasCost, setCurrentGasCost] = useState("");
+
+    useEffect(() => {
+        getCurrentMileageAndCost();
+    }, []);
+
+    async function getCurrentMileageAndCost(){
+        const user1 = JSON.parse(getCookie('user'));
+        const riderEmail = user1["email"];
+        const response = await getMethod("/getCurrentMileageAndCost", riderEmail);
+        setCurrentMileage(response['Mileage']);
+        setCurrentGasCost(response['FuelCost']);
+
+    }
+
     async function handleSubmit(event) {
 
         event.preventDefault();
-        const user = JSON.parse(sessionStorage.getItem('user'));
+        // const user = JSON.parse(sessionStorage.getItem('user'));
         // console.log(user);
-
-        const riderEmail = user["email"];
+        const user1 = JSON.parse(getCookie('user'));
+        const riderEmail = user1["email"];
 
         const mileageAndCostJson = {
             "email": riderEmail,
@@ -56,6 +73,12 @@ export default function SettingsPage(){
                 />
                 <button type="submit">Submit</button>
             </form>
+            <div>
+                Current Mileage: {currentMileage}
+            </div>
+            <div>
+                Current Gas Cost: {currentGasCost}
+            </div>
         </>
     )
 }

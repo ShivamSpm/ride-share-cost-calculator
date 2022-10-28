@@ -8,7 +8,9 @@ export default function Header({
 }){
     return(
         <div>
-            <h2>{heading}</h2>
+            <h2>
+                {heading}
+            </h2>
             <p>
             {paragraph} {' '}
             <Link to={linkUrl}>

@@ -7,6 +7,9 @@ import { MenuItem, InputBase, Menu, Divider } from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
 import { makeStyles } from "@material-ui/core/styles";
 import { postMethod } from "../constants/axiosRequests";
+import Cookies from 'universal-cookie';
+
+import { getCookie } from "../App";
 
 const useStyles = makeStyles((theme) => ({
     DropDownButton: {
@@ -139,25 +142,31 @@ export default function Dropdown(props){
         else{
         setError("");
         const user = JSON.parse(sessionStorage.getItem('user'));
-        console.log(user);
-        const userEmail = user["email"];
-        const riderEmailJson = {
-          "riderEmail":userEmail
+        // const user1 = Cookies.get('user');
+        const user1 = getCookie('user');
+        console.log("user1");
+        console.log(user1);
+        const riderEmail = user1['email'];
+        const riderName = user1['Name'];
+        const riderJson = {
+          "riderEmail": riderEmail,
+          "riderName": riderName
         }
+        
         const rideDistanceJson = {
           "distance": distance
         }
         
-        namesList.push(riderEmailJson);
+        namesList.push(riderJson);
         namesList.push(rideDistanceJson);
         
         try{
         await postMethod("/saveRide", namesList);
-        namesList.splice(-1)
-        namesList.splice(-1)
+        namesList.splice(-1);
+        namesList.splice(-1);
         setNamesList(namesList);
         console.log(namesList);
-        // setDupNamesList([]);
+        
         }catch(err){
           console.log(err);
         }
@@ -228,7 +237,7 @@ export default function Dropdown(props){
           }
           return value;
         }
-    
+
         return (
           <Menu
             anchorEl={anchorEl}
@@ -280,5 +289,4 @@ export default function Dropdown(props){
           </Menu>
         );
       }
-    
 }
