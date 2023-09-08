@@ -1,6 +1,6 @@
 # Ride Cost Share App 
 <p align="center">
- <a href="https://blog-fullstack-app-kappa.vercel.app/"> <img height=200px src="./client/src/img/logo.png" alt="Blog Website Logo"> </a>
+ <img height=200px src="./Images/Logo.PNG" alt="Website Logo"> </a>
 </p>
 
 <h1 align="center">Ride Cost Share Website</h1>
