@@ -14,7 +14,7 @@
 
 -----------------------------------------
 ### Overview
-When faced with the challenge of splitting gas costs among six individuals sharing a car, I developed a web application that streamlined the process of dividing ride expenses. My roommate recently bought a car, and with a group of six friends, he would offer rides. However, manually splitting the fuel costs every time became cumbersome. This served as the primary motivation for creating this application, as it greatly streamlined the process, and all expenses were automatically recorded in the database for easy tracking of rides.
+When faced with the challenge of splitting gas costs among six individuals sharing a car, I developed a web application that streamlined the process of dividing ride expenses. The cost of the ride is calculated based on the mileage of the car and journey distance. My roommate recently bought a car, and with a group of six friends, he would offer rides. However, manually splitting the fuel costs every time became cumbersome. This served as the primary motivation for creating this application, as it greatly streamlined the process, and all expenses were automatically recorded in the database for easy tracking of rides.
 
 -----------------------------------------
 
@@ -27,3 +27,9 @@ When faced with the challenge of splitting gas costs among six individuals shari
 
 -----------------------------------------
 
+### Implementation
+* Built with React for the front-end, utilizing AWS API Gateway and Lambda (Node.js) for the server-side logic, and integrated with a AWS DynamoDB (NoSQL) database for data management.
+* Developed a Home page that displays the amounts owed and owed to you for shared rides
+* Created a page for users with cars to initiate rides and add passengers sharing the ride
+* Implemented a settings page for users with cars to update the mileage of their car
+* Designed a dedicated page to maintain a detailed record of your ride history
